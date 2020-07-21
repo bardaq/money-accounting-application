@@ -1,15 +1,15 @@
 {
   "name": "money-accounting-application",
   "version": "1.0.0",
-  "main": "index.js",
   "repository": "https://github.com/bardaq/money-accounting-application.git",
-  "license": "MIT",
+  "private": true,
+  "workspaces": [ "server", "client" ],
   "scripts": {
-    "start:server": "node server/app.js",
-    "start": "yarn start:server"
+    "client": "yarn workspace  @money-accounting-application/client start",
+    "server": "yarn workspace @money-accounting-application/server start",
+    "start": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client\""
   },
   "dependencies": {
-    "express": "~4.16.1",
-    "morgan": "^1.10.0"
+    "concurrently": "^5.2.0"
   }
 }

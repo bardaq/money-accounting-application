@@ -1,6 +1,6 @@
-0. Implement an Account model (Redis?);
-1. Implement an Account services;
-2. Implement an Account controllers and routers;
+V 0. Implement an Account model (Redis?);
+V 1. Implement an Account services;
+V 2. Implement an Account controllers and routers;
 3. Implement saving all transaction to the storage;
 
 4. Scafold a CRA
