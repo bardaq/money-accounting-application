@@ -3,9 +3,9 @@ import { IAccount } from '@entities/Account';
 
 export interface IStorage {
   insert:  (collection: keyof typeof inMemoryStorage.storage, value: any) => Promise<any>,
-  update:  (collection: keyof typeof inMemoryStorage.storage, value: any) => Promise<any>,
+  update:  (collection: keyof typeof inMemoryStorage.storage, newEntity: any) => Promise<any>,
   remove:  (collection: keyof typeof inMemoryStorage.storage, id: string) => Promise<boolean>,
-  select:  <T>(collection: keyof typeof inMemoryStorage.storage, id: string) => Promise<T | null>,
+  select:  <T>(collection: keyof typeof inMemoryStorage.storage, id?: string) => Promise<T | null>,
   storage: {
     accounts: IAccount[],
     [key: string]: any
@@ -17,6 +17,7 @@ const inMemoryStorage: IStorage = {
     accounts: [],
     transactions: []
   },
+
   insert: async (collection: keyof typeof inMemoryStorage.storage, value: any) => {
     try {
       inMemoryStorage.storage[collection] = [
@@ -31,18 +32,20 @@ const inMemoryStorage: IStorage = {
       throw new Error(`Failed to insert; ${e}`)
     }
   },
-  update: async (collection: keyof typeof inMemoryStorage.storage, value: any) => {
+
+  update: async (collection: keyof typeof inMemoryStorage.storage, _newEntity: any) => {
     try {
-      const oldValue = (inMemoryStorage.storage[collection] as any[]).find((item: any) => item.id === value.id);
-      const newValue = {...oldValue, ...value};
-      const collectionWithoutOldValue = (inMemoryStorage.storage[collection] as any[])
-        .filter((item: any) => item.id === oldValue.id);
-      inMemoryStorage.storage[collection] = [...collectionWithoutOldValue, newValue] as any;
-      return true;
+      const oldEntity = (inMemoryStorage.storage[collection] as any[]).find((item: any) => item.id === _newEntity.id);
+      const newEntity = {...oldEntity, ..._newEntity};
+      const collectionWithoutOldEntity = (inMemoryStorage.storage[collection] as any[])
+        .filter((item: any) => item.id === _newEntity.id);
+      inMemoryStorage.storage[collection] = [...collectionWithoutOldEntity, newEntity] as any;
+      return newEntity;
     } catch(e) {
       throw new Error(`Failed to insert; ${e}`)
     }
   },
+
   remove: async (collection: keyof typeof inMemoryStorage.storage, id: string) => {
     try {
       inMemoryStorage.storage[collection] = (inMemoryStorage.storage[collection] as any[]).filter((item: any) => item.id === id) as any;
@@ -51,9 +54,11 @@ const inMemoryStorage: IStorage = {
       throw new Error(`Failed to remove; ${e}`)
     }
   },
-  select: async (collection: keyof typeof inMemoryStorage.storage, id: string) => {
+
+  select: async (collection: keyof typeof inMemoryStorage.storage, id?: string) => {
     try {
-      const result = (inMemoryStorage.storage[collection] as any[]).find((item: any) => item.id === id);
+      if (!id) return inMemoryStorage.storage[collection] || [];
+      const result = (inMemoryStorage.storage[collection] as any[]).find((item: any) => item.id === id) || [];
       return result;
     } catch(e) {
       throw new Error(`Failed to select; ${e}`)
