@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
-import AccountDAO from './account.dao';
+import AccountDAO from './accounts.dao';
 
 
 export const create = (req: Request, res: Response, next: NextFunction) => {
   return AccountDAO.create(req.body.balance)
-    .then((accountID: string) => res.json({ accountID }))
+    .then((accountID: string) => res.json({ id: accountID }))
     .catch((err: Error) => next(err));
 };
 

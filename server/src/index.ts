@@ -6,7 +6,8 @@ import http from 'http';
 
 import { initDatabase } from './db';
 import errorHandlers from './errorHandlers';
-import generateAccountsAPI from './account/routes';
+import generateAccountsAPI from './accounts/accounts.routes';
+import generateTransactionsAPI from './transactions/transactions.routes';
 import logger from '@shared/Logger';
 
 export type AuthUserReq = {
@@ -24,6 +25,7 @@ app.use(bodyParser.json({ limit: '50mb' }));
 
 app.get('/status', (req, res) => res.json({ status: 'ok' }));
 generateAccountsAPI(app);
+generateTransactionsAPI(app);
 
 app.use((req, res) => res.json({ status: 404 }));
 

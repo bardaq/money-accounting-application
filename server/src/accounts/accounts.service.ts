@@ -1,5 +1,5 @@
 import db from '@db/index';
-import { IAccount } from '@entities/Account';
+import { IAccount } from 'src/accounts/Account';
 import {
   withdrawalError, topUpInvalidIdError, topUpInvalidAmountError,
   withdrawalInvalidIdError, withdrawalInvalidAmountError } from '@shared/constants';

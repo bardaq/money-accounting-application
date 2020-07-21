@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { IAccount } from '@entities/Account';
+import { IAccount } from 'src/accounts/Account';
 
 export interface IStorage {
   insert:  (collection: keyof typeof inMemoryStorage.storage, value: any) => Promise<any>,
