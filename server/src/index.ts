@@ -1,3 +1,6 @@
+// tslint:disable-next-line: no-var-requires
+require('module-alias/register');
+
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -8,7 +11,7 @@ import { initDatabase } from './db';
 import errorHandlers from './errorHandlers';
 import generateAccountsAPI from './accounts/accounts.routes';
 import generateTransactionsAPI from './transactions/transactions.routes';
-import logger from '@shared/Logger';
+import logger from './shared/Logger';
 
 export type AuthUserReq = {
   user: { email: string; iat: number; exp?: number };
@@ -27,7 +30,7 @@ app.get('/status', (req, res) => res.json({ status: 'ok' }));
 generateAccountsAPI(app);
 generateTransactionsAPI(app);
 
-app.use((req, res) => res.json({ status: 404 }));
+app.use((req, res) => res.status(404).end());
 
 errorHandlers(app);
 app.on('error', e => logger.error(e));

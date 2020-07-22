@@ -1,5 +1,5 @@
-import db from '@db/index';
-import Account from 'src/accounts/Account';
+import db from '../db/index';
+import Account from './Account';
 
 export const AccountDAO = {
   create: async (balance = 0) => {

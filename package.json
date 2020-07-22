@@ -5,9 +5,15 @@
   "private": true,
   "workspaces": [ "server", "client" ],
   "scripts": {
+    "build": "concurrently --kill-others-on-fail \"yarn build:client\"  \"yarn build:server\"",
+    "build:client": "yarn workspace  @money-accounting-application/client build",
+    "build:server": "yarn workspace @money-accounting-application/server build",
     "client": "yarn workspace  @money-accounting-application/client start",
     "server": "yarn workspace @money-accounting-application/server start",
-    "start": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client\""
+    "start": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client\"",
+    "start-server:dev": "yarn workspace @money-accounting-application/server start:dev",
+    "start-client:dev": "yarn workspace @money-accounting-application/client start:dev",
+    "start:dev": "concurrently --kill-others-on-fail \"yarn start-server:dev\"  \"yarn start-client:dev\""
   },
   "dependencies": {
     "concurrently": "^5.2.0"

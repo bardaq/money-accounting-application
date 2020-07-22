@@ -1,10 +1,10 @@
-import { config } from "process";
 import { fetchAPI } from "utils";
 import { ITransaction } from "./transactions.type";
 
 
 export async function getAll() {
-    return fetchAPI('transactions');
+    const res = await fetchAPI('transactions');
+    return res;
 }
 
 export async function getOne(id: string) {

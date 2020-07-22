@@ -1,5 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
-import { IAccount } from 'src/accounts/Account';
+import random from 'lodash/random';
+
+import { IAccount } from '../accounts/Account';
+import { ITransaction } from 'src/transactions/Transaction';
 
 export interface IStorage {
   insert:  (collection: keyof typeof inMemoryStorage.storage, value: any) => Promise<any>,
@@ -77,6 +80,45 @@ export function initDatabase() {
       balance: 9999,
     },
   ];
+
+  inMemoryStorage.storage.transactions = [
+    {
+      id: 'd4cf1329-c533-4f2b-8dd1-a51408f12750',
+      targetAccountID: '1234123412341234',
+      isWithdrawal: true,
+      amount: 123,
+    },
+    {
+      id: '2976a307-7d93-4b4e-ba43-a68734671e82',
+      targetAccountID: '1234123412341234',
+      isWithdrawal: false,
+      amount: 2332,
+    },
+    {
+      id: 'fb7a39cc-3592-4f28-ac49-84379c1fb9d5',
+      targetAccountID: '0987098709870987',
+      isWithdrawal: false,
+      amount: 231,
+    },
+    {
+      id: 'd4cf1329-c533-4f2b-8dd1-a51408f12751',
+      targetAccountID: '1234123412341234',
+      isWithdrawal: true,
+      amount: 123,
+    },
+    {
+      id: '2976a307-7d93-4b4e-ba43-a68734671e83',
+      targetAccountID: '1234123412341234',
+      isWithdrawal: true,
+      amount: 4343,
+    },
+    {
+      id: 'fb7a39cc-3592-4f28-ac49-84379c1fb9d6',
+      targetAccountID: '0987098709870987',
+      isWithdrawal: false,
+      amount: 124124,
+    },
+  ] as ITransaction[];
 
   return inMemoryStorage;
 }

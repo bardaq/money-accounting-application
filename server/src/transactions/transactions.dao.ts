@@ -1,9 +1,9 @@
-import db from '@db/index';
+import db from '../db/index';
 import Transaction from './Transaction';
 
 export const AccountDAO = {
-  create: async (targetAccountID: string, isWidhdrawal: boolean, amount: number) => {
-    const newTransaction = new Transaction(targetAccountID, isWidhdrawal, amount);
+  create: async (targetAccountID: string, isWithdrawal: boolean, amount: number) => {
+    const newTransaction = new Transaction(targetAccountID, isWithdrawal, amount);
     await db.insert('transactions', newTransaction);
     return newTransaction.id;
   },

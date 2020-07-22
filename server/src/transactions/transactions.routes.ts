@@ -5,10 +5,10 @@ import { create, read, remove, update } from './transations.controller';
 
 export default function generateTransactionsAPI(app: Express) {
   app.post(
-    '/transaction',
+    '/transactions',
     [
       body('targetAccountID').isString().bail().isLength({ min: 16 }),
-      body('isWidhdrawal').isBoolean(),
+      body('isWithdrawal').isBoolean(),
       body('amount')
         .isNumeric()
         .bail()
@@ -21,12 +21,12 @@ export default function generateTransactionsAPI(app: Express) {
     create
   );
   app.get(
-    '/transaction/:id?',
+    '/transactions/:id?',
     handleValidationErrorsMiddlware,
     read
   );
   app.post(
-    '/transaction',
+    '/transactions',
     [
       body('id').isString().bail().isLength({ min: 16 }),
       body('balance')

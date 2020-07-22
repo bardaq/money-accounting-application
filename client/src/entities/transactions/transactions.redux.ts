@@ -22,7 +22,7 @@ export function fetchAllTransactionsAction() {
     const transactions = await API.getAll();
     dispatch({
       type: FETCH_ALL_TRANSACTION_SUCCESS,
-      payload: { entities: transactions },
+      payload: { entities: transactions || [] },
     });
   };
 }
@@ -33,6 +33,7 @@ export interface IFetchAllTransactionsSuccess {
   payload: { entities: ITransaction[] };
 }
 export function fetchAllTransactionsSuccessAction(entities: ITransaction[]) {
+  console.log(entities);
   return async (dispatch: Dispatch<AnyAction>) => {
     dispatch({
         type: FETCH_ALL_TRANSACTION_SUCCESS,
@@ -65,12 +66,12 @@ export function commitTransactionsAction() {
  */
 
 interface ITransactionState {
-  transactions: ITransaction[] | null,
+  entities: ITransaction[] | null,
   isPending: boolean;
 
 }
 const initialState: Readonly<ITransactionState> = {
-  transactions: null,
+  entities: null,
   isPending: false,
 };
 
@@ -84,14 +85,15 @@ export const transactionsReducer = (
     case FETCH_ALL_TRANSACTION_SUCCESS:
       return {
           ...state,
-          transactions: [...(state.transactions || []), ...payload.entities],
+          entities: payload.entities,
+          // entities: [...(state.entities || []), ...payload.entities],
           isPending: false,
         };
 
     case COMMIT_TRANSACTION:
       return {
         ...state,
-        transactions: { ...payload.organization },
+        entities: { ...payload.organization },
         isPending: false,
       };
 

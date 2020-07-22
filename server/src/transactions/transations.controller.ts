@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 import TransactionDAO from './transactions.dao';
-import AccountService from 'src/accounts/accounts.service';
+import AccountService from '../accounts/accounts.service';
 
 
 export const create = (req: Request, res: Response, next: NextFunction) => {
-  const { isWidhdrawal, targetAccountID, amount } = req.body;
+  const { isWithdrawal, targetAccountID, amount } = req.body;
   try {
-    if (isWidhdrawal) AccountService.withdrawal(targetAccountID, targetAccountID)
+    if (isWithdrawal) AccountService.withdrawal(targetAccountID, targetAccountID)
     else AccountService.topUp(targetAccountID, amount);
   } catch (e) {
     next(e);
@@ -14,7 +14,7 @@ export const create = (req: Request, res: Response, next: NextFunction) => {
   return TransactionDAO.create(
     targetAccountID,
     amount,
-    isWidhdrawal,
+    isWithdrawal,
   )
     .then((transactionID: string) => res.json({ id: transactionID }))
     .catch((err: Error) => next(err));
@@ -22,7 +22,7 @@ export const create = (req: Request, res: Response, next: NextFunction) => {
 
 export const read = (req: Request, res: Response, next: NextFunction) => {
   return TransactionDAO.read(req.params.id as string)
-    .then((result) => res.json(result))
+    .then((result) => res.json(result || []))
     .catch((err: Error) => next(err));
 };
 

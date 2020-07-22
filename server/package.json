@@ -2,9 +2,9 @@
   "name": "@money-accounting-application/server",
   "version": "0.0.0",
   "scripts": {
-    "build": "tsc --build tsconfig.prod.json",
+    "build": "rm -rf ./dist && tsc --build tsconfig.prod.json",
     "lint": "tslint --project \"tsconfig.json\"",
-    "start": "node -r module-alias/register ./dist --env=production",
+    "start": "node ./dist --env=production",
     "start:dev": "nodemon",
     "test": "nodemon --config ./spec/nodemon.json"
   },
@@ -17,13 +17,6 @@
       "src/public"
     ],
     "exec": "ts-node -r tsconfig-paths/register ./src"
-  },
-  "_moduleAliases": {
-    "@db": "dist/db",
-    "@daos": "dist/dataAccessObjects",
-    "@entities": "dist/entities",
-    "@shared": "dist/shared",
-    "@server": "dist/Server"
   },
   "dependencies": {
     "@types/cors": "^2.8.6",
@@ -39,7 +32,6 @@
     "helmet": "^3.23.3",
     "http-status-codes": "^1.4.0",
     "lodash": "^4.17.19",
-    "module-alias": "^2.2.2",
     "morgan": "^1.10.0",
     "uuid": "^8.2.0",
     "winston": "^3.3.3"

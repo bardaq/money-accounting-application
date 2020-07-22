@@ -1,4 +1,4 @@
-import { generateAccountID } from '@shared/utils';
+import { generateAccountID } from '../shared/utils';
 
 export interface IAccount {
   id: string;
