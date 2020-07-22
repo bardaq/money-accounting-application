@@ -19,18 +19,24 @@ export interface IFetchAllTransactions {
 export function fetchAllTransactionsAction() {
   return async (dispatch: Dispatch<AnyAction>) => {
     dispatch({ type: FETCH_ALL_TRANSACTION });
+    const transactions = await API.getAll();
+    dispatch({
+      type: FETCH_ALL_TRANSACTION_SUCCESS,
+      payload: { entities: transactions },
+    });
   };
 }
 
 export const FETCH_ALL_TRANSACTION_SUCCESS = "FETCH_ALL_TRANSACTION_SUCCESS";
 export interface IFetchAllTransactionsSuccess {
   type: typeof FETCH_ALL_TRANSACTION_SUCCESS;
+  payload: { entities: ITransaction[] };
 }
 export function fetchAllTransactionsSuccessAction(entities: ITransaction[]) {
   return async (dispatch: Dispatch<AnyAction>) => {
     dispatch({
         type: FETCH_ALL_TRANSACTION_SUCCESS,
-        payload: { data: entities }
+        payload: { entities }
     });
   };
 }

@@ -2,7 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
-import transactionsReducer from "entities/transactions/transactions.redux";
+import transactionsReducer from "entities/transactions";
 
 const rootReducer = combineReducers({
   transactions: transactionsReducer,

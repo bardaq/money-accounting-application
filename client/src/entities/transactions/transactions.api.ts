@@ -3,7 +3,7 @@ import { fetchAPI } from "utils";
 import { ITransaction } from "./transactions.type";
 
 
-export async function getAll(entity: Omit<ITransaction, 'id'>) {
+export async function getAll() {
     return fetchAPI('transactions');
 }
 
